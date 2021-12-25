@@ -1,0 +1,35 @@
+helm repo add falcosecurity https://falcosecurity.github.io/charts
+
+ssh root@192.168.50.101
+
+rpm --import https://falco.org/repo/falcosecurity-3672BA8F.asc
+
+curl -s -o /etc/zypp/repos.d/falcosecurity.repo https://falco.org/repo/falcosecurity-rpm.repo
+
+zypper -n install kernel-default-devel 
+
+reboot
+
+helm repo update
+
+helm install --kubeconfig kube_config_cluster.yml falco falcosecurity/falco \
+  --set falco.grpc.enabled=true \
+  --set falco.grpcOutput.enabled=true
+
+kubectl --kubeconfig kube_config_cluster.yml get pods
+
+kubectl --kubeconfig kube_config_cluster.yml get ds
+
+kubectl --kubeconfig kube_config_cluster.yml get ds falco -o yaml | grep serviceAcc
+
+kubectl --kubeconfig kube_config_cluster.yml exec -it falco-59pdt /bin/bash
+
+adduser outside_user
+
+cat /etc/shadow > /dev/null
+
+kubectl --kubeconfig kube_config_cluster.yml logs -f falco-59pdt | grep adduser
+
+kubectl --kubeconfig kube_config_cluster.yml logs -f falco-59pdt | grep /etc/shadow
+
+kubectl --kubeconfig kube_config_cluster.yml logs -f falco-59pdt | grep nc

@@ -1,0 +1,5 @@
+- RKE Install: https://rancher.com/docs/rke/latest/en/installation/
+- Copy Public Key: ```sudo ssh-copy-id -i ~/.ssh/id_rsa root@192.168.50.101```
+- Cluster Create: ```rke up```
+- Nodes Check: ```kubectl --kubeconfig kube_config_cluster.yml get nodes```
+- Pods Check: ```kubectl --kubeconfig kube_config_cluster.yml get pods```

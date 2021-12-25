@@ -1,0 +1,9 @@
+helm repo add stable https://charts.helm.sh/stable
+
+helm install --kubeconfig kube_config_cluster.yml stable/prometheus-operator --generate-name
+
+kubectl --kubeconfig kube_config_cluster.yml get pods
+
+kubectl --kubeconfig kube_config_cluster.yml --namespace default get pods | grep prometheus
+
+kubectl --kubeconfig kube_config_cluster.yml --namespace default port-forward prometheus-prometheus-operator-164045-prometheus-0 9090

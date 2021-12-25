@@ -1,0 +1,17 @@
+helm install --kubeconfig kube_config_cluster.yml falco-exporter \
+ --set serviceMonitor.enabled=true \
+falcosecurity/falco-exporter
+
+kubectl --kubeconfig kube_config_cluster.yml get pods
+
+kubectl --kubeconfig kube_config_cluster.yml get pods --namespace default -l "app.kubernetes.io/name=falco-exporter,app.kubernetes.io/instance=falco-exporter" -o jsonpath="{.items[0].metadata.name}"
+
+kubectl --kubeconfig kube_config_cluster.yml port-forward --namespace default falco-exporter-2w4dj 9376
+
+127.0.0.1:9376/metrics
+
+kubectl --kubeconfig kube_config_cluster.yml get prometheus
+
+kubectl --kubeconfig kube_config_cluster.yml edit prometheus prometheus-operator-164045-prometheus
+
+kubectl --kubeconfig kube_config_cluster.yml apply -f falco_service_monitor.yaml

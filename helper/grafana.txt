@@ -1,0 +1,3 @@
+kubectl --kubeconfig kube_config_cluster.yml get pod
+
+kubectl --kubeconfig kube_config_cluster.yml --namespace default port-forward prometheus-operator-1640458872-grafana-d78c6b64c-kb8lr 3000

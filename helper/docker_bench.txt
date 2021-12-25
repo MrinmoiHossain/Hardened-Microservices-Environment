@@ -1,0 +1,13 @@
+- Install Go on OpenSUSE: https://www.phillipsj.net/posts/installing-go-on-opensuse/
+- Install Git: ```zypper in git```
+- Install Docker Bench: 
+```
+git clone https://github.com/aquasecurity/docker-bench.git
+cd docker-bench/
+go build -o docker-bench
+```
+- Run the Docker Bench:
+```
+./docker-bench --version 18.09
+./docker-bench --version 18.09 | grep FAIL
+```
