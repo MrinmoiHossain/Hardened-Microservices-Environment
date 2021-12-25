@@ -1,0 +1,16 @@
+## Question
+- How will you test the changes? 
+- How will you ensure the changes don't negatively affect your cluster? 
+
+## Answer
+
+In the working procedure, atleast there've three working environment as - development, staging and production. We'll test the changes in the development 
+environment first and find the functionality & performance after hardening. As one of the hardening can affect of the others behavior of etcd, master and 
+control plane. Then we'll monitor metrics that are available through observability and monitoring tools as - Prometheus and Grafana.
+
+After having successfully tested these changes in the development environment, we'll migrate them to the Staging environment and simulate the actual 
+user behavour & traffic. Once the test in the Staging environment is passing, we can take a blue-green deployment approach by supporting 2 production 
+environments. The blue production environment is where the out-of-the box Kubernetes configuration resides while the green environment is where 
+all the hardening changes will take place. At first, we'll send a small portion of the production traffic to the green environment and monitor any 
+potential adverse effect. If everything goes well, we'll gradually increasing the traffic to the green environment. After migrating the full traffic, blue 
+environment will become the backup environment or turned off completely.

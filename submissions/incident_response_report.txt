@@ -1,0 +1,11 @@
+1. Incident commander name: Detect unauthorized crypto mining jobs using the Stratum protocol (falco-4sfth).
+
+2. Executive summary of what happened: Three pods were running for crypto mining (as - moneropool, minergate and minergate) in the Kubernetes cluster. They caused the CPU load to rise to over 90% and started slowing down the system.
+
+3. Summary of what was affected: Kubernetes cluster were affected by three crypto miners pods that using our most of the cpu.For that, system became unresponsive and unusable.
+
+4. Summmry of the impact: Crypto mining application need havey CPU. It caused slow user responce and pods run long time & generated huge cost. 
+
+5. Summary of the remediation steps: System administrator had detected 3 unauthorized pods in Grafana. Then, took the action to evict them from the cluster using the and confirmed in the Grafana dashboard.
+
+6. Summary of lessons learned: We need to restrict user access on the cluster and restrict images to deploy into the cluster. Always, need to  monitor the cluster health with monitor tools with alert system.

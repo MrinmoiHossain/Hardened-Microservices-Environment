@@ -1,0 +1,34 @@
+### Docker Threat Modeling
+According to Docker's system components and the STRIDE framework, five potential threats that may arise are -
+
+1. Spooling: An attacker may spoof the docker daemon or docker registry and introduce a spooled image and trick trick users to using it.
+
+2. Tampering: Docker host daemon and client configuration could be altered by a comprised client to change its behavior.
+
+3. Elevation of Privilege: If the user is not defineed, then daemon privilege may be escalated. So, the container may run as a root user, giving access to other containers on the same docker host. This is also known as an isolation tampering.
+
+4. Information Disclosure: The client may expose sensitive information such as secrets that are hardcoded in configuration files that could impact the security of the Dockerfile.
+
+5. Denial of service: By default, a container can use all the memory on the host. If the memory consumption for each container is not limited, one container could consume all the memory and deem other containers unusable.
+
+
+### Kubernetes Threat Modeling
+According to Kubernetes' system components and the STRIDE framework, five potential threats that may arise are - 
+
+1. Spoofing: The connection between the API server and Kubelet can be spoofed. This can be mitigated by using kubelet uses strong encryption that does not have cryptographic flaws, strong TLS ciphers should be used.
+
+2. Tampering: The configuration of etcd may be tampered with by an attacker, modifying vital system-level configurations such as pod specs. This can be mitigated by restricting permissions on etcd files to 644 or more restrictive and that the pod spec file is set to root ownership.
+
+3. Repudiation: Unauthorized changes can be made to the API server or kubelet. This can be mitigated by making sure only trusted callers can authenticate to the API server or Kubelet by enforcing TLS.
+
+4. Information Disclosure: Sensitive information may be exposed via the etcd key-value store. This can be mitigated by encrypting etcd content at rest and using TLS to access etcd only from the kube-apiserver. All other traffic should be rejected.
+
+5. Denial of Service: Excessive traffic to the API server can overwhelm the endpoint. And, for that, kube-scheduler can incorrectly schedule the pod.
+
+
+### Docker-bench Run Results and Analysis
+From the failed findings, I've selected 3 findings from the Docker-bench results that I've harden based on the 5 attack surface areas. As -
+
+- Fixed [4.5]: By using ```export DOCKER_CONTENT_TRUST=1``` this export on the machine.
+- Fixed [5.10]: By settings memory limit to run container, as - ```docker run --interactive --tty --memory 256m centos /bin/bash```.
+- Fixed [5.14]: By changing restart policy on container, as - ```docker run --detach --restart=on-failure:5 nginx```.
