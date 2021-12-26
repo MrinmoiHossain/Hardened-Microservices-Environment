@@ -29,6 +29,6 @@ According to Kubernetes' system components and the STRIDE framework, five potent
 ### Docker-bench Run Results and Analysis
 From the failed findings, I've selected 3 findings from the Docker-bench results that I've harden based on the 5 attack surface areas. As -
 
+- Fixed [2.1]: By changing the docker daemon configuration file to ```"icc": false```.
+- Fixed [2.2]: By changing the docker daemon configuration file to ```"log-level": "info"```.
 - Fixed [4.5]: By using ```export DOCKER_CONTENT_TRUST=1``` this export on the machine.
-- Fixed [5.10]: By settings memory limit to run container, as - ```docker run --interactive --tty --memory 256m centos /bin/bash```.
-- Fixed [5.14]: By changing restart policy on container, as - ```docker run --detach --restart=on-failure:5 nginx```.
